@@ -6,7 +6,7 @@ import torch
 app = FastAPI()
 
 # 指定你的本地模型路径
-model_path = "/Users/jeasonzhao/Downloads/bert_optimized"  # 修改为你的实际路径
+model_path = "JeasonZhao0421/NEU_ALY6980_Capstone-Project"  # 修改为你的实际路径
 
 # 加载 Tokenizer 和 BERT 模型
 tokenizer = BertTokenizer.from_pretrained(model_path)
