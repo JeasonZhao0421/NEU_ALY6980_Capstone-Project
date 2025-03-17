@@ -5,11 +5,14 @@ import torch
 
 app = FastAPI()
 
-# 指定你的本地模型路径
-
+import os
 from transformers import AutoModel
 
-model = AutoModel.from_pretrained("YingxiangJEason/bert_optimized")
+# 读取 Hugging Face Token
+hf_token = os.getenv("HUGGINGFACE_TOKEN")
+
+# 访问私有 Hugging Face 模型
+model = AutoModel.from_pretrained("YingxiangJEason/bert_optimized", use_auth_token=hf_token)
 
 
 
