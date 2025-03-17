@@ -7,7 +7,11 @@ app = FastAPI()
 
 # 指定你的本地模型路径
 
-model_path = "https://github.com/JeasonZhao0421/NEU_ALY6980_Capstone-Project"
+from transformers import AutoModel
+
+model = AutoModel.from_pretrained("YingxiangJEason/bert_optimized")
+
+
 
 # 加载 Tokenizer 和 BERT 模型
 tokenizer = BertTokenizer.from_pretrained(model_path)
