@@ -14,8 +14,8 @@ hf_token = os.getenv("HUGGINGFACE_TOKEN")
 model_path = "YingxiangJEason/bert_optimized"
 
 # **加载 Tokenizer 和 BERT 模型**
-tokenizer = BertTokenizer.from_pretrained(model_path, use_auth_token=hf_token)
-model = BertForSequenceClassification.from_pretrained(model_path, use_auth_token=hf_token)
+tokenizer = BertTokenizer.from_pretrained(model_path, token=hf_token)
+model = BertForSequenceClassification.from_pretrained(model_path, token=hf_token)
 
 # **设置模型为推理模式**
 model.eval()
