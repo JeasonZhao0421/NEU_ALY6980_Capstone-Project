@@ -3,6 +3,8 @@ from pydantic import BaseModel
 from transformers import BertTokenizer, BertForSequenceClassification
 import torch
 import os
+import uvicorn
+
 
 # 创建 FastAPI 实例
 app = FastAPI()
@@ -53,6 +55,7 @@ def predict_sentiment(text):
     predicted_label = max(sentiment_scores, key=sentiment_scores.get)
     return {"predicted_sentiment": predicted_label, "probabilities": sentiment_scores}
 
+
 # **创建 API 端点**
 @app.post("/predict")
 def predict(review: ReviewText):
@@ -63,3 +66,8 @@ def predict(review: ReviewText):
 @app.get("/")
 def root():
     return {"message": "API is running"}
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))  # Render 可能会提供不同的端口
+    uvicorn.run(app, host="0.0.0.0", port=port)
+
