@@ -6,27 +6,27 @@ import os
 import uvicorn
 
 
-# 创建 FastAPI 实例
+#  Creating a FastAPI Instance
 app = FastAPI()
 
-# 读取 Hugging Face Token
+# Read Hugging Face Token
 hf_token = os.getenv("HUGGINGFACE_TOKEN")
 
-# **定义模型路径**
+# Defining model paths
 model_path = "YingxiangJEason/bert_optimized"
 
-# **加载 Tokenizer 和 BERT 模型**
+# Loading Tokenizer and BERT Models
 tokenizer = BertTokenizer.from_pretrained(model_path, token=hf_token)
 model = BertForSequenceClassification.from_pretrained(model_path, token=hf_token)
 
-# **设置模型为推理模式**
+# Setting the model to reasoning mode
 model.eval()
 
-# **定义输入数据格式**
+# Define input data format
 class ReviewText(BaseModel):
     text: str
 
-# **预测函数**
+# predictive function
 def predict_sentiment(text):
     inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True)
     with torch.no_grad():
@@ -56,18 +56,18 @@ def predict_sentiment(text):
     return {"predicted_sentiment": predicted_label, "probabilities": sentiment_scores}
 
 
-# **创建 API 端点**
+# Creating API Endpoints
 @app.post("/predict")
 def predict(review: ReviewText):
     result = predict_sentiment(review.text)
     return result
 
-# **API 健康检查**
+# API Health Check
 @app.get("/")
 def root():
     return {"message": "API is running"}
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))  # Render 可能会提供不同的端口
+    port = int(os.environ.get("PORT", 10000))  # Render may provide different ports
     uvicorn.run(app, host="0.0.0.0", port=port)
 
